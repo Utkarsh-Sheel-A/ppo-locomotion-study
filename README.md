@@ -16,12 +16,12 @@ a **seed-robustness check** (seed 42 vs 7 on Humanoid), and a **rollout-length a
 
 ---
 
-## 📄 Main deliverable
+##  Main deliverable
 
 - **[REPORT.md](REPORT.md)** — the full write-up: PPO explained from first principles,
   methodology, all experiments with figures, and lessons learned.
 
-## 📊 Headline figures
+## Headline figures
 
 | | |
 |---|---|
@@ -31,7 +31,7 @@ a **seed-robustness check** (seed 42 vs 7 on Humanoid), and a **rollout-length a
 All figures live in [`PPO_SB3/analysis/figures/`](PPO_SB3/analysis/figures/),
 generated from the raw run artifacts by a single script.
 
-## 🔑 Key findings
+## Key findings
 
 1. **Lower learning rate won everywhere it was tested.** lr 1e-4 beat lr 3e-4 on both
    Ant (+1 323 final reward) and Humanoid (+3 311); lr 3e-4 on Humanoid collapsed into
@@ -46,7 +46,7 @@ generated from the raw run artifacts by a single script.
    drives clip fraction and approximate KL steadily upward — it sits right at the edge of
    its trust region late in training — while explained variance rises fast on easy tasks.
 
-## 📁 Repository layout
+##  Repo layout
 
 ```
 
@@ -71,7 +71,7 @@ Each env folder follows the same structure: `train_*.py` → `evaluate_*.py` →
 eval curves), Monitor CSVs (training curves), TensorBoard event files, and `models/<run>/`
 holding checkpoints + `final_eval_results.json`.
 
-## 🔁 Reproducing
+## Reproducing
 
 ```bash
 conda create -n rl python=3.13          # or: conda activate rl (already configured here)
@@ -89,11 +89,11 @@ python analysis/final_eval.py --model-dir Hopper_SB3/models/hopper_ppo --env-id 
 python Humanoid_sb3/train_humanoid_ppo.py --lr 1e-4 --seed 42
 ```
 
-## 🛠 Tech stack
+## Tech stack
 
 Python · Stable-Baselines3 2.9 · PyTorch 2.13 · Gymnasium/MuJoCo v5 · TensorBoard · NumPy · Matplotlib
 
-## 📚 References
+## References
 
 - Schulman et al., *Proximal Policy Optimization Algorithms* (2017) — arXiv:1707.06347
 - Schulman et al., *High-Dimensional Continuous Control Using GAE* (2015) — arXiv:1506.02438
