@@ -1,0 +1,10 @@
+{
+  "run_name": "hopper_ppo",
+  "env_id": "Hopper-v5",
+  "checkpoint": "best_model",
+  "n_episodes": 20,
+  "mean_reward": 3485.9140625,
+  "std_reward": 4.591500759124756,
+  "mean_length": 1000.0,
+  "std_length": 0.0
+}

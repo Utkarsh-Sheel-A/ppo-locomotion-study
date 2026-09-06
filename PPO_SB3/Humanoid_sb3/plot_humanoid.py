@@ -1,0 +1,86 @@
+"""
+Plots training reward, evaluation reward (with std band), and evaluation
+episode length for one Humanoid run - same 3-panel layout as the Ant/Walker2d
+plots you already have.
+
+    python plot_humanoid.py --lr 3e-4 --seed 42
+    python plot_humanoid.py --lr 1e-4 --seed 42
+    python plot_humanoid.py --lr <winner> --seed 7
+
+Reads:
+  - logs/humanoid_ppo_lr<..>_seed<..>/monitor/         (training curve)
+  - logs/humanoid_ppo_lr<..>_seed<..>/evaluations.npz  (written automatically by EvalCallback)
+"""
+import os
+import argparse
+import numpy as np
+import matplotlib.pyplot as plt
+from stable_baselines3.common.results_plotter import load_results, ts2xy
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--lr", type=float, default=3e-4)
+parser.add_argument("--seed", type=int, default=42)
+args = parser.parse_args()
+
+lr_tag = f"lr{args.lr:.0e}"
+run_name = f"humanoid_ppo_{lr_tag}_seed{args.seed}"
+log_dir = f"./logs/{run_name}/"
+monitor_dir = os.path.join(log_dir, "monitor")
+
+fig, axes = plt.subplots(1, 3, figsize=(16, 4.5))
+fig.suptitle(run_name, fontsize=10, y=1.02)
+
+# --- Training reward curve (from Monitor CSVs) ---
+try:
+    results = load_results(monitor_dir)
+    x, y = ts2xy(results, "timesteps")
+    window = 50
+    if len(y) >= window:
+        y_smooth = np.convolve(y, np.ones(window) / window, mode="valid")
+        x_smooth = x[window - 1:]
+    else:
+        x_smooth, y_smooth = x, y
+    axes[0].plot(x, y, alpha=0.25, color="tab:blue", label="raw episode reward")
+    axes[0].plot(x_smooth, y_smooth, color="tab:blue", label=f"{window}-episode moving avg")
+    axes[0].set_title("Training reward (rollout)")
+    axes[0].legend(fontsize=8)
+except Exception as e:
+    axes[0].set_title("Training reward (no data yet)")
+    print(f"Could not load monitor logs: {e}")
+
+# --- Evaluation reward + episode length (from EvalCallback's saved npz) ---
+eval_path = os.path.join(log_dir, "evaluations.npz")
+try:
+    data = np.load(eval_path)
+    timesteps = data["timesteps"]
+    results = data["results"]        # shape: (n_evals, n_eval_episodes)
+    ep_lengths = data["ep_lengths"]  # shape: (n_evals, n_eval_episodes)
+
+    mean_reward = results.mean(axis=1)
+    std_reward = results.std(axis=1)
+    mean_length = ep_lengths.mean(axis=1)
+
+    axes[1].plot(timesteps, mean_reward, color="tab:green")
+    axes[1].fill_between(timesteps, mean_reward - std_reward, mean_reward + std_reward,
+                          alpha=0.2, color="tab:green")
+    axes[1].set_title("Eval reward (mean +/- std)")
+
+    axes[2].plot(timesteps, mean_length, color="tab:orange")
+    axes[2].set_title("Eval episode length")
+
+    print(f"Latest eval: {mean_reward[-1]:.1f} +/- {std_reward[-1]:.1f}  "
+          f"(length {mean_length[-1]:.0f}) at {timesteps[-1]:,} steps")
+except FileNotFoundError:
+    axes[1].set_title("Eval reward (no data yet)")
+    axes[2].set_title("Eval episode length (no data yet)")
+    print(f"No evaluations.npz found at {eval_path} yet - run training first.")
+
+for ax in axes:
+    ax.set_xlabel("timesteps")
+    ax.grid(alpha=0.3)
+
+plt.tight_layout()
+out_path = os.path.join(log_dir, "training_curves.png")
+plt.savefig(out_path, dpi=150, bbox_inches="tight")
+print(f"Saved plot to {out_path}")
+plt.show()

@@ -1,0 +1,9 @@
+env,run,checkpoint,episodes,mean_reward,std_reward,mean_length
+Ant-v5,ant_ppo_2048_lr3e-04,best_model,20,3147.0,644.84,966.9
+Ant-v5,ant_ppo_lr1e-04,best_model,20,3099.67,96.79,999.6
+Ant-v5,ant_ppo_lr3e-04,best_model,20,1604.62,608.46,794.5
+Hopper-v5,hopper_ppo,best_model,20,3485.91,4.59,1000.0
+Humanoid-v5,humanoid_ppo_lr1e-04_seed42,best_model,20,4160.04,1524.69,719.5
+Humanoid-v5,humanoid_ppo_lr1e-04_seed7,best_model,20,4450.6,1555.79,778.1
+Humanoid-v5,humanoid_ppo_lr3e-04_seed42,best_model,20,849.74,178.9,161.1
+Walker2d-v5,walker2d_ppo,best_model,20,6007.79,27.1,1000.0

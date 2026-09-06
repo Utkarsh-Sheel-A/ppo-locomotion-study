@@ -1,0 +1,9 @@
+{
+  "run_name": "ant_ppo_lr3e-04",
+  "checkpoint": "best_model",
+  "n_episodes": 20,
+  "mean_reward": 1604.6234130859375,
+  "std_reward": 608.463623046875,
+  "mean_length": 794.45,
+  "std_length": 268.18640439067747
+}

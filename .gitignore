@@ -1,0 +1,15 @@
+# large training artifacts 
+**/models/**/ckpt_*.zip
+**/tb_logs/
+
+# raw rollout videos 
+**/videos/**/*.mp4
+
+# python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# os
+.DS_Store
+.vscode

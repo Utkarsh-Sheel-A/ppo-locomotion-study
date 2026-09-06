@@ -1,0 +1,8 @@
+{
+  "checkpoint": "best_model",
+  "n_episodes": 20,
+  "mean_reward": 6007.78955078125,
+  "std_reward": 27.10276222229004,
+  "mean_length": 1000.0,
+  "std_length": 0.0
+}
