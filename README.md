@@ -54,7 +54,6 @@ generated from the raw run artifacts by a single script.
 ├── REPORT.md                        # full project report
 ├── requirements.txt                
 └── PPO_SB3/
-    ├── ppo_sb3_cheatsheet.md        #practical reference: reading plots, comparing runs, per-env gotchas
     ├── Hopper_SB3/                  # per-env training / eval / recording scripts + run logs
     ├── Walker_2d_Sb3/
     ├── Ant_Sb3/
@@ -74,7 +73,7 @@ holding checkpoints + `final_eval_results.json`.
 ## Reproducing
 
 ```bash
-conda create -n rl python=3.13          # or: conda activate rl (already configured here)
+conda create -n rl python=3.13          
 conda activate rl
 pip install -r requirements.txt
 
