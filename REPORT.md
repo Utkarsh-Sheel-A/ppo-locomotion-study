@@ -365,21 +365,7 @@ pipeline and matches every number quoted here.
 
 ---
 
-## 11. Potential Future work
-
-- **KL early-stopping** (`target_kl`) or lr decay for Humanoid, whose clip fraction ≈ 0.6 /
-  KL ≈ 0.2 show it riding the trust-region limit.
-- **Entropy-coefficient tuning** (`ent_coef > 0`) for stuck-on-standing local optima.
-- **More seeds per configuration** (3–5) to turn the seed observation into a real confidence
-  interval.
-- **Network scaling for Humanoid** (`net_arch=[256, 256]`), untried here by design since the
-  plan was to isolate the learning-rate effect first.
-- **Algorithm comparison**: run SAC or TD3 on the same tasks for an on-policy vs off-policy
-  sample-efficiency contrast.
-
----
-
-## 12. References
+## 11. References
 
 - Schulman, J. et al. (2017). *Proximal Policy Optimization Algorithms.* arXiv:1707.06347
 - Schulman, J. et al. (2015). *High-Dimensional Continuous Control Using Generalized Advantage
